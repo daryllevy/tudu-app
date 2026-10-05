@@ -1,3 +1,4 @@
+import ToDo from "../models/toDo";
 // 1. créer un todo
 //     Je dois stocker la liste des todos
 //     je créer la fonction créer un todo :
@@ -6,21 +7,18 @@
 //     je les ajoute dans un nouveau objet
 //     et j'ajoute cette objet à mon tableaux de todos
 
-const todos = [];
 class ToDoServices {
-  createToDo(data) {
-    const { title, description, dueDate, priority } = data;
+  constructor() {
+    this.todos = [];
+  }
+  createToDo({ title, description, dueDate, priority }) {
+    const todo = new ToDo(title, description, dueDate, priority);
+    this.todos.push(todo);
 
-    const newTodo = {
-      title,
-      description,
-      dueDate,
-      priority,
-    };
-
-    todos.push(newTodo);
-
-    return newTodo;
+    return todo;
+  }
+  getTodos() {
+    return this.todos;
   }
 }
 
