@@ -1,8 +1,10 @@
 import ToDoServices from "./services/toDoServices";
 import ProjectServices from "./services/projectServices";
+import DisplayToDo from "./utils/displayTodo";
 
 const toDoServices = new ToDoServices();
 const projectServices = new ProjectServices();
+const displayTodo = new DisplayToDo();
 
 function main() {
   console.log("Créer une tâche : ");
@@ -10,7 +12,7 @@ function main() {
   toDoServices.createToDo({
     title: "Mon premier todo",
     description: "test",
-    dueDate: "18 /10/2026",
+    dueDate: "2026-10-13",
     priority: "prioritaire",
   });
 
@@ -34,7 +36,7 @@ function main() {
   projectServices.addTask("Project numéro 1", {
     title: "Mon first todo dans un projet",
     description: "test",
-    dueDate: "18 /10/2026",
+    dueDate: "2026-10-13",
     priority: "faible",
   });
 
@@ -59,6 +61,10 @@ function main() {
   console.log("Supprimer un projet : ");
   projectServices.deleteProject("Projet 2");
   console.log(projectServices.getProjectTodos());
+
+  console.log("Afficher les tâches d'aujoud'hui : ");
+  console.log(displayTodo.filterByToday(toDoServices.getTodos()));
+  console.log(displayTodo.filterByToday(projectServices.getProjectTodos()));
 }
 
 main();
