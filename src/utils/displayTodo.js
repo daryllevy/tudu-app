@@ -1,20 +1,20 @@
-import { format, isSameMonth, isSameWeek, toDate } from "date-fns";
+import { format, isSameMonth, isSameWeek, isToday, toDate } from "date-fns";
 
 class DisplayToDo {
   filterByToday(todos) {
-    const today = format(new Date(), "yyyy-MM-dd");
+    if (todos.length > 0 && Array.isArray(todos[0].todos)) {
+      return todos
+        .map((project) => {
+          const tasksOfToday = project.todos.filter((task) =>
+            isToday(toDate(task.dueDate)),
+          );
 
-    if (Array.isArray(todos)) {
-      return todos.filter((todo) => {
-        if (Array.isArray(todo.todos)) {
-          return todo.todos.some((task) => task.dueDate === today);
-        }
-
-        return todo.dueDate === today;
-      });
+          return { ...project, todos: tasksOfToday };
+        })
+        .filter((project) => project.todos.length > 0);
     }
 
-    return [];
+    return todos.filter((todo) => isToday(toDate(todo.dueDate)));
   }
 
   filterByWeek(todos) {
@@ -24,7 +24,7 @@ class DisplayToDo {
       return todos
         .map((project) => {
           const tasksOfWeek = project.todos.filter((task) =>
-            isSameWeek(today, toDate(task.dueDate)),
+            isSameWeek(today, toDate(task.dueDate), { weekStartsOn: 1 }),
           );
 
           return { ...project, todos: tasksOfWeek };
@@ -32,7 +32,9 @@ class DisplayToDo {
         .filter((project) => project.todos.length > 0);
     }
 
-    return todos.filter((todo) => isSameWeek(today, toDate(todo.dueDate)));
+    return todos.filter((todo) =>
+      isSameWeek(today, toDate(todo.dueDate), { weekStartsOn: 1 }),
+    );
   }
 
   filterByMonth(todos) {
