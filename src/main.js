@@ -12,7 +12,7 @@ function main() {
   toDoServices.createToDo({
     title: "Mon premier todo",
     description: "test",
-    dueDate: "2026-11-13",
+    dueDate: "2026-10-13",
     priority: "prioritaire",
   });
 
@@ -44,7 +44,13 @@ function main() {
   projectServices.addTask("Projet 2", {
     title: "Mon deuxième todo dans un projet",
     description: "test",
-    dueDate: "2026-10-19",
+    dueDate: "2026-10-14",
+    priority: "faible",
+  });
+  projectServices.addTask("Projet 2", {
+    title: "Mon troisième todo dans un projet",
+    description: "test",
+    dueDate: "2026-12-19",
     priority: "faible",
   });
 
@@ -69,6 +75,10 @@ function main() {
   console.log("Afficher par semaine : ");
   console.log(displayTodo.filterByWeek(toDoServices.getTodos()));
   console.log(displayTodo.filterByWeek(projectServices.getProjectTodos()));
+
+  console.log("Afficher par mois : ");
+  console.log(displayTodo.filterByMonth(toDoServices.getTodos()));
+  console.log(displayTodo.filterByMonth(projectServices.getProjectTodos()));
 }
 
 main();
