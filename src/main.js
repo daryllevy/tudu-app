@@ -12,14 +12,14 @@ function main() {
   toDoServices.createToDo({
     title: "Mon premier todo",
     description: "test",
-    dueDate: "2026-10-13",
+    dueDate: "2026-11-13",
     priority: "prioritaire",
   });
 
   toDoServices.createToDo({
     title: "Mon deuxième todo",
     description: "test",
-    dueDate: "18 /10/2026",
+    dueDate: "2026-10-12",
     priority: "prioritaire",
   });
 
@@ -36,7 +36,7 @@ function main() {
   projectServices.addTask("Project numéro 1", {
     title: "Mon first todo dans un projet",
     description: "test",
-    dueDate: "2026-10-13",
+    dueDate: "2026-10-14",
     priority: "faible",
   });
 
@@ -44,27 +44,31 @@ function main() {
   projectServices.addTask("Projet 2", {
     title: "Mon deuxième todo dans un projet",
     description: "test",
-    dueDate: "18 /10/2026",
+    dueDate: "2026-10-19",
     priority: "faible",
   });
 
   console.log(projectServices.getProjectTodos());
 
-  console.log("Supprimer une tâche : ");
-  toDoServices.deleteTodo("Mon deuxième todo");
-  console.log(toDoServices.getTodos());
+  // console.log("Supprimer une tâche : ");
+  // toDoServices.deleteTodo("Mon deuxième todo");
+  // console.log(toDoServices.getTodos());
 
-  console.log("Supprimer une tâche dans un projet : ");
-  projectServices.deleteTask("Projet 2", "Mon deuxième todo dans un projet");
-  console.log(projectServices.getProjectTodos());
+  // console.log("Supprimer une tâche dans un projet : ");
+  // projectServices.deleteTask("Projet 2", "Mon deuxième todo dans un projet");
+  // console.log(projectServices.getProjectTodos());
 
-  console.log("Supprimer un projet : ");
-  projectServices.deleteProject("Projet 2");
-  console.log(projectServices.getProjectTodos());
+  // console.log("Supprimer un projet : ");
+  // projectServices.deleteProject("Projet 2");
+  // console.log(projectServices.getProjectTodos());
 
   console.log("Afficher les tâches d'aujoud'hui : ");
   console.log(displayTodo.filterByToday(toDoServices.getTodos()));
   console.log(displayTodo.filterByToday(projectServices.getProjectTodos()));
+
+  console.log("Afficher par semaine : ");
+  console.log(displayTodo.filterByWeek(toDoServices.getTodos()));
+  console.log(displayTodo.filterByWeek(projectServices.getProjectTodos()));
 }
 
 main();
