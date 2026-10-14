@@ -20,24 +20,20 @@ class DisplayToDo {
   filterByWeek(todos) {
     const today = toDate(format(new Date(), "yyyy-MM-dd"));
 
-    return todos.filter((todo) => {
-      if (Array.isArray(todo.todos)) {
-        return todo.todos.some((task) =>
-          isSameWeek(today, toDate(task.dueDate), { weekStartsOn: 1 }),
-        );
-      }
+    if (todos.length > 0 && Array.isArray(todos[0].todos)) {
+      return todos
+        .map((project) => {
+          const tasksOfWeek = project.todos.filter((task) =>
+            isSameWeek(today, toDate(task.dueDate)),
+          );
 
-      return isSameWeek(today, toDate(todo.dueDate), {
-        weekStartsOn: 1,
-      })
-        ? todo
-        : false;
-    });
+          return { ...project, todos: tasksOfWeek };
+        })
+        .filter((project) => project.todos.length > 0);
+    }
+
+    return todos.filter((todo) => isSameWeek(today, toDate(todo.dueDate)));
   }
-
-  //     Pour les todo par mois
-  //         Je recupère le mois et l'année dans laquelle nous sommes
-  //         j'affiche tous les todo qui partagent le même mois et la même année
 
   filterByMonth(todos) {
     const today = toDate(format(new Date(), "yyyy-MM-dd"));
