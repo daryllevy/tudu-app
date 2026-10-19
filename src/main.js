@@ -1,6 +1,7 @@
 import ToDoServices from "./services/toDoServices";
 import ProjectServices from "./services/projectServices";
 import DisplayToDo from "./utils/displayTodo";
+import "./style.css";
 
 const toDoServices = new ToDoServices();
 const projectServices = new ProjectServices();
