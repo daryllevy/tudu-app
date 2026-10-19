@@ -1,0 +1,23 @@
+/* Josh Comeau's Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Enlève les margin par defaut  */
+*:not(dialog) {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hérité la police pour les éléments des formulaires */
+input,
+button,
+select {
+  font: inherit;
+}
