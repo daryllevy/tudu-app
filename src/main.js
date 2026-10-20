@@ -6,6 +6,16 @@ import "./style.css";
 const toDoServices = new ToDoServices();
 const projectServices = new ProjectServices();
 const displayTodo = new DisplayToDo();
+const taskDialog = document.querySelector("#task-dialog");
+const projectDialog = document.querySelector("#project-dialog");
+
+document
+  .querySelector(".add-task")
+  .addEventListener("click", () => taskDialog.showModal());
+
+document
+  .querySelector(".add-project")
+  .addEventListener("click", () => projectDialog.showModal());
 
 function main() {
   console.log("Créer une tâche : ");
