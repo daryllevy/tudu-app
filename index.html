@@ -21,11 +21,53 @@
         <div class="project-classification">
           <h3>Projects</h3>
           <button type="button" class="btn add-project">+ New Project</button>
+          <dialog id="project-dialog">
+            <form id="project-form">
+              <div>
+                <p class="form-title">New Project</p>
+                <input type="text" placeholder="Title" required />
+                <button type="submit">Save</button>
+                <button type="submit" formmethod="dialog" formnovalidate>
+                  Close
+                </button>
+              </div>
+            </form>
+          </dialog>
         </div>
       </aside>
       <div class="content">
         <h2 class="content-title">Inbox</h2>
         <button type="button" class="btn add-task">+ New Task</button>
+        <dialog id="task-dialog">
+          <button
+            type="submit"
+            form="task-form"
+            formmethod="dialog"
+            formnovalidate
+          >
+            X
+          </button>
+          <form method="dialog" id="task-form">
+            <div>
+              <p class="form-title">New Task</p>
+
+              <input type="text" class="title" placeholder="Title" required />
+              <input
+                type="text"
+                class="description"
+                placeholder="Description"
+              />
+              <input type="date" class="dueDate" />
+              <select name="priorities" id="priority-select">
+                <option value="">--Priority--</option>
+                <option value="high" class="high">High</option>
+                <option value="medium" class="medium">Medium</option>
+                <option value="low" class="low">Low</option>
+              </select>
+              <button type="submit">Save</button>
+            </div>
+          </form>
+        </dialog>
       </div>
     </main>
   </body>
