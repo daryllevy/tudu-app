@@ -21,3 +21,91 @@ button,
 select {
   font: inherit;
 }
+/* FIN Reset Css */
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h2.app-title {
+  font-size: 3.2rem;
+  background-color: antiquewhite;
+}
+
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(25rem, 1fr) 3fr;
+}
+
+h2.app-title,
+aside,
+.content {
+  padding: 2.6rem;
+}
+
+.btn {
+  padding: 0.5rem 1.6rem;
+  font-weight: 700;
+  background-color: #fff;
+  border: 1px solid #000;
+}
+
+.btn:hover {
+  background-color: aquamarine;
+  cursor: pointer;
+  border: none;
+}
+
+/* ASIDE */
+aside {
+  border-right: 1px solid #000;
+}
+
+.todo-classification {
+  margin-bottom: 2.6rem;
+}
+
+.list {
+  list-style: none;
+  margin-bottom: 1.6rem;
+}
+
+.list.classification-list:hover {
+  cursor: pointer;
+  background-color: #ececec;
+  padding: 0.5rem 0.5rem;
+  font-weight: 700;
+}
+
+h2,
+h3 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.btn.add-project {
+  margin-top: 1.6rem;
+}
+
+/* CONTENT */
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content-title {
+  font-size: 2.6rem;
+  text-transform: uppercase;
+}
+
+.btn.add-task {
+  align-self: start;
+}
