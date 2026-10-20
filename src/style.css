@@ -64,6 +64,19 @@ aside,
   border: none;
 }
 
+form {
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}
+
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 35%);
+  backdrop-filter: blur(3px);
+}
+
 /* ASIDE */
 aside {
   border-right: 1px solid #000;
