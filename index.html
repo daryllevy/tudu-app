@@ -7,27 +7,25 @@
     <script src="./src/main.js" type="module" defer></script>
   </head>
   <body>
-    <h2>TuDu App</h2>
+    <h2 class="app-title">TuDu App</h2>
 
     <main>
       <aside>
         <div class="todo-classification">
-          <ul>
-            <li>Inbox</li>
-            <li>Today</li>
-            <li>This week</li>
-            <li>This month</li>
-          </ul>
+          <li class="list classification-list">Inbox</li>
+          <li class="list classification-list">Today</li>
+          <li class="list classification-list">This week</li>
+          <li class="list classification-list">This month</li>
         </div>
 
         <div class="project-classification">
-          <button type="button">add new +</button>
+          <h3>Projects</h3>
+          <button type="button" class="btn add-project">+ New Project</button>
         </div>
       </aside>
       <div class="content">
-        <h2 class="content-title"></h2>
-        <button type="button">add new +</button>
-        <ul class="content-tags-list"></ul>
+        <h2 class="content-title">Inbox</h2>
+        <button type="button" class="btn add-task">+ New Task</button>
       </div>
     </main>
   </body>
