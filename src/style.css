@@ -185,3 +185,20 @@ h3 {
 .btn.add-task {
   align-self: start;
 }
+
+#task-dialog div {
+  display: flex;
+  flex-direction: column;
+
+  .btn {
+    border-radius: 0.5rem;
+  }
+
+  .red {
+    align-self: flex-end;
+  }
+
+  .green {
+    padding: 1rem;
+  }
+}
