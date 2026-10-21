@@ -12,10 +12,12 @@
     <main>
       <aside>
         <div class="todo-classification">
-          <li class="list classification-list">Inbox</li>
-          <li class="list classification-list">Today</li>
-          <li class="list classification-list">This week</li>
-          <li class="list classification-list">This month</li>
+          <ul>
+            <li class="list classification-list">Inbox</li>
+            <li class="list classification-list">Today</li>
+            <li class="list classification-list">This week</li>
+            <li class="list classification-list">This month</li>
+          </ul>
         </div>
 
         <div class="project-classification">
@@ -24,12 +26,19 @@
           <dialog id="project-dialog">
             <form id="project-form">
               <div>
-                <p class="form-title">New Project</p>
+                <h2 class="form-title">New Project</h2>
                 <input type="text" placeholder="Title" required />
-                <button type="submit">Save</button>
-                <button type="submit" formmethod="dialog" formnovalidate>
-                  Close
-                </button>
+                <div class="btns">
+                  <button class="btn green" type="submit">Save</button>
+                  <button
+                    class="btn red"
+                    type="submit"
+                    formmethod="dialog"
+                    formnovalidate
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </form>
           </dialog>
@@ -40,7 +49,8 @@
         <button type="button" class="btn add-task">+ New Task</button>
         <dialog id="task-dialog">
           <button
-            type="submit"
+            class="btn red"
+            type="submit "
             form="task-form"
             formmethod="dialog"
             formnovalidate
@@ -49,7 +59,7 @@
           </button>
           <form method="dialog" id="task-form">
             <div>
-              <p class="form-title">New Task</p>
+              <h2 class="form-title">New Task</h2>
 
               <input type="text" class="title" placeholder="Title" required />
               <input
@@ -64,7 +74,7 @@
                 <option value="medium" class="medium">Medium</option>
                 <option value="low" class="low">Low</option>
               </select>
-              <button type="submit">Save</button>
+              <button class="btn green" type="submit">Save</button>
             </div>
           </form>
         </dialog>
