@@ -22,12 +22,18 @@
 
         <div class="project-classification">
           <h3>Projects</h3>
+          <ul class="projects-list"></ul>
           <button type="button" class="btn add-project">+ New Project</button>
           <dialog id="project-dialog">
             <form id="project-form">
               <div>
                 <h2 class="form-title">New Project</h2>
-                <input type="text" placeholder="Title" required />
+                <input
+                  type="text"
+                  id="project-title"
+                  placeholder="Title"
+                  required
+                />
                 <div class="btns">
                   <button class="btn green" type="submit">Save</button>
                   <button
@@ -61,18 +67,19 @@
             <form method="dialog" id="task-form">
               <div>
                 <h2 class="form-title">New Task</h2>
-                <input type="text" class="title" placeholder="Title" required />
                 <input
                   type="text"
-                  class="description"
-                  placeholder="Description"
+                  id="task-title"
+                  placeholder="Title"
+                  required
                 />
-                <input type="date" class="dueDate" />
+                <input type="text" id="description" placeholder="Description" />
+                <input type="date" id="dueDate" />
                 <select name="priorities" id="priority-select">
                   <option value="">--Priority--</option>
-                  <option value="high" class="high">High</option>
-                  <option value="medium" class="medium">Medium</option>
-                  <option value="low" class="low">Low</option>
+                  <option value="high" id="high">High</option>
+                  <option value="medium" id="medium">Medium</option>
+                  <option value="low" id="low">Low</option>
                 </select>
                 <button class="btn green" type="submit">Save</button>
               </div>
