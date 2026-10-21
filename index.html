@@ -48,35 +48,36 @@
         <h2 class="content-title">Inbox</h2>
         <button type="button" class="btn add-task">+ New Task</button>
         <dialog id="task-dialog">
-          <button
-            class="btn red"
-            type="submit "
-            form="task-form"
-            formmethod="dialog"
-            formnovalidate
-          >
-            X
-          </button>
-          <form method="dialog" id="task-form">
-            <div>
-              <h2 class="form-title">New Task</h2>
-
-              <input type="text" class="title" placeholder="Title" required />
-              <input
-                type="text"
-                class="description"
-                placeholder="Description"
-              />
-              <input type="date" class="dueDate" />
-              <select name="priorities" id="priority-select">
-                <option value="">--Priority--</option>
-                <option value="high" class="high">High</option>
-                <option value="medium" class="medium">Medium</option>
-                <option value="low" class="low">Low</option>
-              </select>
-              <button class="btn green" type="submit">Save</button>
-            </div>
-          </form>
+          <div>
+            <button
+              class="btn red"
+              type="submit "
+              form="task-form"
+              formmethod="dialog"
+              formnovalidate
+            >
+              X
+            </button>
+            <form method="dialog" id="task-form">
+              <div>
+                <h2 class="form-title">New Task</h2>
+                <input type="text" class="title" placeholder="Title" required />
+                <input
+                  type="text"
+                  class="description"
+                  placeholder="Description"
+                />
+                <input type="date" class="dueDate" />
+                <select name="priorities" id="priority-select">
+                  <option value="">--Priority--</option>
+                  <option value="high" class="high">High</option>
+                  <option value="medium" class="medium">Medium</option>
+                  <option value="low" class="low">Low</option>
+                </select>
+                <button class="btn green" type="submit">Save</button>
+              </div>
+            </form>
+          </div>
         </dialog>
       </div>
     </main>
