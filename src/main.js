@@ -1,21 +1,13 @@
 import ToDoServices from "./services/toDoServices";
 import ProjectServices from "./services/projectServices";
 import DisplayToDo from "./utils/displayTodo";
+import TodoHtmlView from "./views/TodoHtmlView";
 import "./style.css";
 
 const toDoServices = new ToDoServices();
 const projectServices = new ProjectServices();
 const displayTodo = new DisplayToDo();
-const taskDialog = document.querySelector("#task-dialog");
-const projectDialog = document.querySelector("#project-dialog");
-
-document
-  .querySelector(".add-task")
-  .addEventListener("click", () => taskDialog.showModal());
-
-document
-  .querySelector(".add-project")
-  .addEventListener("click", () => projectDialog.showModal());
+const view = new TodoHtmlView();
 
 function main() {
   console.log("Créer une tâche : ");
