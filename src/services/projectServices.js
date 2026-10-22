@@ -1,18 +1,23 @@
 import ToDoServices from "./toDoServices";
 import Project from "../models/Project";
+import Pubsub from "pubsub-js";
 
 const toDoServices = new ToDoServices();
 
 class ProjectServices {
   constructor() {
     this.projects = [];
+
+    Pubsub.subscribe("adding_project", (topic, data) => {
+      this.createProject(data.title);
+    });
   }
 
   createProject(title) {
-    const toDoTitle = new Project(title);
-    this.projects.push(toDoTitle);
+    const projectTitle = new Project(title);
+    this.projects.push(projectTitle);
 
-    return toDoTitle;
+    Pubsub.publish("project_added", this.projects);
   }
 
   addTask(projectTitle, { title, description, dueDate, priority }) {
