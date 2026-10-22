@@ -2,6 +2,7 @@ import ToDoServices from "./services/toDoServices";
 import ProjectServices from "./services/projectServices";
 import DisplayToDo from "./utils/displayTodo";
 import TodoHtmlView from "./views/TodoHtmlView";
+import PubSub from "pubsub-js";
 import "./style.css";
 
 const toDoServices = new ToDoServices();
@@ -35,6 +36,9 @@ function main() {
 
   console.log("Créer un projet : ");
 
+  PubSub.subscribe("project_added", (topic, projects) => {
+    view.renderProject(projects);
+  });
   projectServices.createProject("Project numéro 1");
   projectServices.addTask("Project numéro 1", {
     title: "Mon first todo dans un projet",
