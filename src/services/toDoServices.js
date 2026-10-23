@@ -1,15 +1,25 @@
 import ToDo from "../models/toDo";
+import PubSub from "pubsub-js";
 
 class ToDoServices {
   constructor() {
     this.todos = [];
+
+    PubSub.subscribe("adding_task", (topic, data) => {
+      this.createToDo({
+        title: data.title,
+        description: data.description,
+        dueDate: data.dueDate,
+        priority: data.priority,
+      });
+    });
   }
 
   createToDo({ title, description, dueDate, priority }) {
     const todo = new ToDo(title, description, dueDate, priority);
     this.todos.push(todo);
 
-    return todo;
+    PubSub.publish("task_added", this.todos);
   }
 
   modifyTodo(todoTitle, data, modifier) {
