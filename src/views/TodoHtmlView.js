@@ -6,6 +6,7 @@ class TodoHtmlView {
     this.projectDialog = document.querySelector("#project-dialog");
     this.projectForm = document.querySelector("#project-form");
     this.taskForm = document.querySelector("#task-form");
+    this.taskFormTitle = this.taskForm.querySelector(".form-title");
     this.projectTitle = document.querySelector("#project-title");
     this.projectList = document.querySelector(".projects-list");
     this.taskTitle = document.querySelector("#task-title");
@@ -13,6 +14,10 @@ class TodoHtmlView {
     this.taskDueDate = document.querySelector("#dueDate");
     this.taskPriority = document.querySelector("#priority-select");
     this.taskList = document.querySelector(".tasks-list");
+    this.contentTitle = document.querySelector(".content-title");
+    this.classificationList = document.querySelector(
+      ".classification-list-content",
+    );
 
     // EVENEMENTS POUR AFFICHER LES MODALS
     document
@@ -21,7 +26,12 @@ class TodoHtmlView {
 
     document
       .querySelector(".add-task")
-      .addEventListener("click", () => this.taskDialog.showModal());
+      .addEventListener("click", () => {
+        this.editingTaskId = null;
+        this.taskForm.reset();
+        this.taskFormTitle.textContent = "New Task";
+        this.taskDialog.showModal();
+      });
 
     // EVENEMENTS SUR LES FORMULAIRES
     this.projectForm.addEventListener("submit", (e) => {
@@ -47,15 +57,32 @@ class TodoHtmlView {
         return;
       }
 
-      PubSub.publish("adding_task", {
+      const taskData = {
         title: this.taskTitle.value,
         description: this.taskDescription.value,
         dueDate: this.taskDueDate.value,
         priority: this.taskPriority.value,
-      });
+      };
+
+      if (this.editingTaskId) {
+        PubSub.publish("updating_task", {
+          id: this.editingTaskId,
+          data: taskData,
+        });
+        this.editingTaskId = null;
+      } else {
+        PubSub.publish("adding_task", taskData);
+      }
+
       this.taskForm.reset();
+      this.taskFormTitle.textContent = "New Task";
       this.taskDialog.close();
     });
+
+    // EVENEMENTS SUR LA LISTE DE MENU
+    this.classificationList.addEventListener("click", (e) =>
+      this.displayTitle(e),
+    );
   }
 
   renderProject(projects) {
@@ -76,15 +103,41 @@ class TodoHtmlView {
       const li = document.createElement("li");
       const taskTitleP = document.createElement("p");
       const taskDueDateP = document.createElement("p");
+      const deleteIcon = document.createElement("p");
+      const div = document.createElement("div");
 
       taskTitleP.textContent = task.title;
       taskDueDateP.textContent = task.dueDate;
+      deleteIcon.textContent = "🗑️";
 
-      liContainer.append(taskTitleP, taskDueDateP);
+      div.classList.add("flex");
+      deleteIcon.classList.add("trash");
+      div.append(taskDueDateP, deleteIcon);
+      liContainer.append(taskTitleP, div);
       liContainer.classList.add("content");
       li.appendChild(liContainer);
+      li.classList.add("task-list");
+      li.addEventListener("click", (event) => {
+        if (event.target.closest(".trash")) return;
+
+        this.editingTaskId = task.id;
+        this.taskTitle.value = task.title;
+        this.taskDescription.value = task.description;
+        this.taskDueDate.value = task.dueDate;
+        this.taskPriority.value = task.priority;
+        this.taskFormTitle.textContent = "Edit Task";
+        this.taskDialog.showModal();
+      });
       this.taskList.appendChild(li);
     });
+  }
+
+  // Affichage du titre par rapport au menu sélectionné
+  displayTitle(event) {
+    const target = event.target;
+
+    this.contentTitle.innerHTML = "";
+    this.contentTitle.textContent = target.textContent;
   }
 }
 
