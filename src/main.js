@@ -11,57 +11,20 @@ const displayTodo = new DisplayToDo();
 const view = new TodoHtmlView();
 
 function main() {
-  console.log("Créer une tâche : ");
-
-  toDoServices.createToDo({
-    title: "Mon premier todo",
-    description: "test",
-    dueDate: "2026-10-13",
-    priority: "prioritaire",
+  // Ajouter une tâche
+  PubSub.subscribe("task_added", (topic, tasks) => {
+    view.renderTask(tasks);
   });
-
-  toDoServices.createToDo({
-    title: "Mon deuxième todo",
-    description: "test",
-    dueDate: "2026-10-12",
-    priority: "prioritaire",
-  });
-
-  console.log(toDoServices.getTodos());
 
   console.log("Modifier une tâche : ");
   toDoServices.modifyTodo("Mon deuxième todo", "description", "test modifié");
 
   console.log(toDoServices.getTodos());
 
-  console.log("Créer un projet : ");
-
+  // Créer un projet
   PubSub.subscribe("project_added", (topic, projects) => {
     view.renderProject(projects);
   });
-  projectServices.createProject("Project numéro 1");
-  projectServices.addTask("Project numéro 1", {
-    title: "Mon first todo dans un projet",
-    description: "test",
-    dueDate: "2026-10-14",
-    priority: "faible",
-  });
-
-  projectServices.createProject("Projet 2");
-  projectServices.addTask("Projet 2", {
-    title: "Mon deuxième todo dans un projet",
-    description: "test",
-    dueDate: "2026-10-14",
-    priority: "faible",
-  });
-  projectServices.addTask("Projet 2", {
-    title: "Mon troisième todo dans un projet",
-    description: "test",
-    dueDate: "2026-12-19",
-    priority: "faible",
-  });
-
-  console.log(projectServices.getProjectTodos());
 
   // console.log("Supprimer une tâche : ");
   // toDoServices.deleteTodo("Mon deuxième todo");
