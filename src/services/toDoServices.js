@@ -13,6 +13,10 @@ class ToDoServices {
         priority: data.priority,
       });
     });
+
+    PubSub.subscribe("updating_task", (topic, { id, data }) => {
+      this.updateToDo(id, data);
+    });
   }
 
   createToDo({ title, description, dueDate, priority }) {
@@ -27,6 +31,15 @@ class ToDoServices {
 
     if (exists) {
       return (exists[data] = modifier);
+    }
+  }
+
+  updateToDo(todoId, data) {
+    const todo = this.todos.find((task) => task.id === todoId);
+
+    if (todo) {
+      Object.assign(todo, data);
+      PubSub.publish("task_added", this.todos);
     }
   }
 
