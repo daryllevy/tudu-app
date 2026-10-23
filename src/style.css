@@ -47,7 +47,7 @@ main {
 
 h2.app-title,
 aside,
-.content {
+.main-content {
   padding: 2.6rem;
 }
 
@@ -83,6 +83,11 @@ aside,
 .btns {
   flex-direction: row;
   justify-content: center;
+}
+
+.flex {
+  display: flex;
+  gap: 1rem;
 }
 
 form {
@@ -140,8 +145,12 @@ aside {
   margin-bottom: 1.6rem;
 }
 
-.list.classification-list:hover {
+.list:hover,
+.task-list:hover {
   cursor: pointer;
+}
+
+.list.classification-list:hover {
   background-color: #ececec;
   padding: 0.5rem 0.5rem;
   font-weight: 700;
@@ -172,33 +181,44 @@ h3 {
 }
 
 /* CONTENT */
-.content {
-  display: flex;
-  justify-content: space-between;
-}
-
-.content-title {
-  font-size: 2.6rem;
-  text-transform: uppercase;
-}
-
-.btn.add-task {
-  align-self: start;
-}
-
-#task-dialog div {
-  display: flex;
-  flex-direction: column;
-
-  .btn {
-    border-radius: 0.5rem;
+.main-content {
+  .content {
+    display: flex;
+    justify-content: space-between;
   }
 
-  .red {
-    align-self: flex-end;
+  .content-title {
+    font-size: 2.6rem;
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
   }
 
-  .green {
-    padding: 1rem;
+  .btn.add-task {
+    align-self: start;
+  }
+
+  #task-dialog div {
+    display: flex;
+    flex-direction: column;
+
+    .btn {
+      border-radius: 0.5rem;
+    }
+
+    .red {
+      align-self: flex-end;
+      font-family: sans-serif;
+    }
+
+    .green {
+      padding: 1rem;
+    }
+  }
+
+  .task-list {
+    margin: 0 3rem 1.6rem 3rem;
+  }
+  .trash:hover {
+    color: #b30e0ebb;
   }
 }
