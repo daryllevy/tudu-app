@@ -24,14 +24,12 @@ class TodoHtmlView {
       .querySelector(".add-project")
       .addEventListener("click", () => this.projectDialog.showModal());
 
-    document
-      .querySelector(".add-task")
-      .addEventListener("click", () => {
-        this.editingTaskId = null;
-        this.taskForm.reset();
-        this.taskFormTitle.textContent = "New Task";
-        this.taskDialog.showModal();
-      });
+    document.querySelector(".add-task").addEventListener("click", () => {
+      this.editingTaskId = null;
+      this.taskForm.reset();
+      this.taskFormTitle.textContent = "New Task";
+      this.taskDialog.showModal();
+    });
 
     // EVENEMENTS SUR LES FORMULAIRES
     this.projectForm.addEventListener("submit", (e) => {
@@ -118,7 +116,10 @@ class TodoHtmlView {
       li.appendChild(liContainer);
       li.classList.add("task-list");
       li.addEventListener("click", (event) => {
-        if (event.target.closest(".trash")) return;
+        if (event.target.closest(".trash")) {
+          PubSub.publish("delete_task", { title: task.title });
+          return;
+        }
 
         this.editingTaskId = task.id;
         this.taskTitle.value = task.title;

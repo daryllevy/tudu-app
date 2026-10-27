@@ -16,19 +16,15 @@ function main() {
     view.renderTask(tasks);
   });
 
-  console.log("Modifier une tâche : ");
-  toDoServices.modifyTodo("Mon deuxième todo", "description", "test modifié");
-
-  console.log(toDoServices.getTodos());
-
   // Créer un projet
   PubSub.subscribe("project_added", (topic, projects) => {
     view.renderProject(projects);
   });
 
-  // console.log("Supprimer une tâche : ");
-  // toDoServices.deleteTodo("Mon deuxième todo");
-  // console.log(toDoServices.getTodos());
+  // Supprimer une tâche
+  PubSub.subscribe("task_deleted", (topic, tasks) => {
+    view.renderTask(tasks);
+  });
 
   // console.log("Supprimer une tâche dans un projet : ");
   // projectServices.deleteTask("Projet 2", "Mon deuxième todo dans un projet");

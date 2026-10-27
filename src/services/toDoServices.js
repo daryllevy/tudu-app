@@ -17,6 +17,10 @@ class ToDoServices {
     PubSub.subscribe("updating_task", (topic, { id, data }) => {
       this.updateToDo(id, data);
     });
+
+    PubSub.subscribe("delete_task", (topic, data) => {
+      this.deleteTodo(data.title);
+    });
   }
 
   createToDo({ title, description, dueDate, priority }) {
@@ -24,14 +28,6 @@ class ToDoServices {
     this.todos.push(todo);
 
     PubSub.publish("task_added", this.todos);
-  }
-
-  modifyTodo(todoTitle, data, modifier) {
-    const exists = this.todos.find((td) => td.title === todoTitle);
-
-    if (exists) {
-      return (exists[data] = modifier);
-    }
   }
 
   updateToDo(todoId, data) {
@@ -44,7 +40,8 @@ class ToDoServices {
   }
 
   deleteTodo(todoTitle) {
-    return (this.todos = this.todos.filter((todo) => todo.title !== todoTitle));
+    this.todos = this.todos.filter((todo) => todo.title !== todoTitle);
+    PubSub.publish("task_deleted", this.todos);
   }
 
   getTodos() {
