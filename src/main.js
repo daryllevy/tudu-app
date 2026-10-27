@@ -26,6 +26,11 @@ function main() {
     view.renderTask(tasks);
   });
 
+  // Ajouter une tâche à un projet
+  PubSub.subscribe("project_task_added", (topic, tasks) => {
+    view.renderTask(tasks);
+  });
+
   // console.log("Supprimer une tâche dans un projet : ");
   // projectServices.deleteTask("Projet 2", "Mon deuxième todo dans un projet");
   // console.log(projectServices.getProjectTodos());
@@ -36,15 +41,12 @@ function main() {
 
   console.log("Afficher les tâches d'aujoud'hui : ");
   console.log(displayTodo.filterByToday(toDoServices.getTodos()));
-  console.log(displayTodo.filterByToday(projectServices.getProjectTodos()));
 
   console.log("Afficher par semaine : ");
   console.log(displayTodo.filterByWeek(toDoServices.getTodos()));
-  console.log(displayTodo.filterByWeek(projectServices.getProjectTodos()));
 
   console.log("Afficher par mois : ");
   console.log(displayTodo.filterByMonth(toDoServices.getTodos()));
-  console.log(displayTodo.filterByMonth(projectServices.getProjectTodos()));
 }
 
 main();

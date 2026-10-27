@@ -1,6 +1,6 @@
 import ToDoServices from "./toDoServices";
 import Project from "../models/Project";
-import Pubsub from "pubsub-js";
+import PubSub from "pubsub-js";
 
 const toDoServices = new ToDoServices();
 
@@ -8,8 +8,12 @@ class ProjectServices {
   constructor() {
     this.projects = [];
 
-    Pubsub.subscribe("adding_project", (topic, data) => {
+    PubSub.subscribe("adding_project", (topic, data) => {
       this.createProject(data.title);
+    });
+
+    PubSub.subscribe("adding_project_task", (topic, data) => {
+      this.addTask(data.projectTitle, data.taskData);
     });
   }
 
@@ -17,7 +21,7 @@ class ProjectServices {
     const projectTitle = new Project(title);
     this.projects.push(projectTitle);
 
-    Pubsub.publish("project_added", this.projects);
+    PubSub.publish("project_added", this.projects);
   }
 
   addTask(projectTitle, { title, description, dueDate, priority }) {
@@ -35,6 +39,7 @@ class ProjectServices {
     });
 
     project.todos.push(newTodo);
+    PubSub.publish("project_task_added", project.todos);
   }
 
   deleteTask(projectTitle, taskTitle) {
@@ -53,10 +58,6 @@ class ProjectServices {
     return (this.projects = this.projects.filter(
       (project) => project.title !== projectTitle,
     ));
-  }
-
-  getProjectTodos() {
-    return this.projects;
   }
 }
 

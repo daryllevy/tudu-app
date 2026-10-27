@@ -9,6 +9,8 @@ class TodoHtmlView {
     this.taskFormTitle = this.taskForm.querySelector(".form-title");
     this.projectTitle = document.querySelector("#project-title");
     this.projectList = document.querySelector(".projects-list");
+    this.isProjectTask = false;
+    this.selectedProjectTitle = null;
     this.taskTitle = document.querySelector("#task-title");
     this.taskDescription = document.querySelector("#description");
     this.taskDueDate = document.querySelector("#dueDate");
@@ -68,6 +70,11 @@ class TodoHtmlView {
           data: taskData,
         });
         this.editingTaskId = null;
+      } else if (this.isProjectTask) {
+        PubSub.publish("adding_project_task", {
+          projectTitle: this.selectedProjectTitle,
+          taskData,
+        });
       } else {
         PubSub.publish("adding_task", taskData);
       }
@@ -77,10 +84,18 @@ class TodoHtmlView {
       this.taskDialog.close();
     });
 
+    this.projectList.addEventListener("click", (e) => {
+      this.displayTitle(e);
+      this.isProjectTask = true;
+      this.selectedProjectTitle = e.target.textContent;
+    });
+
     // EVENEMENTS SUR LA LISTE DE MENU
-    this.classificationList.addEventListener("click", (e) =>
-      this.displayTitle(e),
-    );
+    this.classificationList.addEventListener("click", (e) => {
+      this.displayTitle(e);
+      this.isProjectTask = false;
+      this.selectedProjectTitle = null;
+    });
   }
 
   renderProject(projects) {

@@ -28,6 +28,7 @@ class ToDoServices {
     this.todos.push(todo);
 
     PubSub.publish("task_added", this.todos);
+    return todo;
   }
 
   updateToDo(todoId, data) {
