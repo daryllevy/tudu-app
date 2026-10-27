@@ -19,7 +19,7 @@ class ToDoServices {
     });
 
     PubSub.subscribe("delete_task", (topic, data) => {
-      this.deleteTodo(data.title);
+      this.deleteTodo(data.id);
     });
   }
 
@@ -40,13 +40,9 @@ class ToDoServices {
     }
   }
 
-  deleteTodo(todoTitle) {
-    this.todos = this.todos.filter((todo) => todo.title !== todoTitle);
+  deleteTodo(todoId) {
+    this.todos = this.todos.filter((todo) => todo.id !== todoId);
     PubSub.publish("task_deleted", this.todos);
-  }
-
-  getTodos() {
-    return this.todos;
   }
 }
 

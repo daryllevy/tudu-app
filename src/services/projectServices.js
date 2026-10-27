@@ -15,6 +15,15 @@ class ProjectServices {
     PubSub.subscribe("adding_project_task", (topic, data) => {
       this.addTask(data.projectTitle, data.taskData);
     });
+
+    PubSub.subscribe("project_selected", (topic, projectTitle) => {
+      const project = this.projects.find((item) => item.title === projectTitle);
+      if (project) PubSub.publish("project_tasks_loaded", project.todos); // Publie les tâches qui étaient déjà enregistrées
+    });
+
+    PubSub.subscribe("delete_project_task", (topic, data) => {
+      this.deleteTask(data.projectTitle, data.taskId);
+    });
   }
 
   createProject(title) {
@@ -42,15 +51,12 @@ class ProjectServices {
     PubSub.publish("project_task_added", project.todos);
   }
 
-  deleteTask(projectTitle, taskTitle) {
-    const project = this.projects.find(
-      (prject) => prject.title === projectTitle,
-    );
+  deleteTask(projectTitle, taskId) {
+    const project = this.projects.find((item) => item.title === projectTitle);
 
     if (project) {
-      project.todos = project.todos.filter(
-        (prject) => prject.title !== taskTitle,
-      );
+      project.todos = project.todos.filter((task) => task.id !== taskId);
+      PubSub.publish("project_task_deleted", project.todos);
     }
   }
 

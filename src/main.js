@@ -31,9 +31,15 @@ function main() {
     view.renderTask(tasks);
   });
 
-  // console.log("Supprimer une tâche dans un projet : ");
-  // projectServices.deleteTask("Projet 2", "Mon deuxième todo dans un projet");
-  // console.log(projectServices.getProjectTodos());
+  // Publier les tâches déjà présente dans le projet
+  PubSub.subscribe("project_tasks_loaded", (topic, tasks) => {
+    view.renderTask(tasks);
+  });
+
+  // Supprimer une tâche dans un projet
+  PubSub.subscribe("project_task_deleted", (topic, tasks) => {
+    view.renderTask(tasks);
+  });
 
   // console.log("Supprimer un projet : ");
   // projectServices.deleteProject("Projet 2");

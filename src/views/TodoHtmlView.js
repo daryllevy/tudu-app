@@ -88,6 +88,7 @@ class TodoHtmlView {
       this.displayTitle(e);
       this.isProjectTask = true;
       this.selectedProjectTitle = e.target.textContent;
+      PubSub.publish("project_selected", this.selectedProjectTitle);
     });
 
     // EVENEMENTS SUR LA LISTE DE MENU
@@ -132,7 +133,14 @@ class TodoHtmlView {
       li.classList.add("task-list");
       li.addEventListener("click", (event) => {
         if (event.target.closest(".trash")) {
-          PubSub.publish("delete_task", { title: task.title });
+          if (this.isProjectTask && this.selectedProjectTitle) {
+            PubSub.publish("delete_project_task", {
+              projectTitle: this.selectedProjectTitle,
+              taskId: task.id,
+            });
+          } else {
+            PubSub.publish("delete_task", { id: task.id });
+          }
           return;
         }
 
