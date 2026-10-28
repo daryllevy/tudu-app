@@ -10,6 +10,7 @@ class TodoHtmlView {
     this.projectTitle = document.querySelector("#project-title");
     this.projectList = document.querySelector(".projects-list");
     this.isProjectTask = false;
+    this.currentSection = "Inbox";
     this.selectedProjectTitle = null;
     this.taskTitle = document.querySelector("#task-title");
     this.taskDescription = document.querySelector("#description");
@@ -65,11 +66,20 @@ class TodoHtmlView {
       };
 
       if (this.editingTaskId) {
-        PubSub.publish("updating_task", {
-          id: this.editingTaskId,
-          data: taskData,
-        });
+        if (this.editingTaskProjectTitle) {
+          PubSub.publish("updating_project_task", {
+            id: this.editingTaskId,
+            projectTitle: this.editingTaskProjectTitle,
+            data: taskData,
+          });
+        } else {
+          PubSub.publish("updating_task", {
+            id: this.editingTaskId,
+            data: taskData,
+          });
+        }
         this.editingTaskId = null;
+        this.editingTaskProjectTitle = null;
       } else if (this.isProjectTask) {
         PubSub.publish("adding_project_task", {
           projectTitle: this.selectedProjectTitle,
@@ -93,8 +103,10 @@ class TodoHtmlView {
         if (this.selectedProjectTitle === projectTitle) {
           this.selectedProjectTitle = null;
           this.isProjectTask = false;
+          this.currentSection = "Inbox";
           this.taskList.innerHTML = "";
           this.contentTitle.textContent = "Inbox";
+          PubSub.publish("show_inbox");
         }
         return;
       }
@@ -105,6 +117,7 @@ class TodoHtmlView {
       this.displayTitle({ target: title });
       this.isProjectTask = true;
       this.selectedProjectTitle = title.textContent;
+      this.currentSection = "project";
       PubSub.publish("project_selected", this.selectedProjectTitle);
     });
 
@@ -113,6 +126,15 @@ class TodoHtmlView {
       this.displayTitle(e);
       this.isProjectTask = false;
       this.selectedProjectTitle = null;
+      this.currentSection = e.target.textContent;
+
+      if (e.target.textContent == "Inbox") {
+        PubSub.publish("show_inbox");
+      }
+
+      if (e.target.textContent === "Today") {
+        PubSub.publish("show_today");
+      }
     });
   }
 
@@ -136,6 +158,7 @@ class TodoHtmlView {
 
       div.classList.add("flex");
       deleteProject.classList.add("trash");
+      projectTitle.classList.add("flex-1");
       li.classList.add("list", "classification-list");
 
       div.append(deleteProject, projectTitle);
@@ -168,9 +191,9 @@ class TodoHtmlView {
       li.classList.add("task-list");
       li.addEventListener("click", (event) => {
         if (event.target.closest(".trash")) {
-          if (this.isProjectTask && this.selectedProjectTitle) {
+          if (task.projectTitle) {
             PubSub.publish("delete_project_task", {
-              projectTitle: this.selectedProjectTitle,
+              projectTitle: task.projectTitle,
               taskId: task.id,
             });
           } else {
@@ -180,6 +203,7 @@ class TodoHtmlView {
         }
 
         this.editingTaskId = task.id;
+        this.editingTaskProjectTitle = task.projectTitle;
         this.taskTitle.value = task.title;
         this.taskDescription.value = task.description;
         this.taskDueDate.value = task.dueDate;
