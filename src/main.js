@@ -41,18 +41,16 @@ function main() {
     view.renderTask(tasks);
   });
 
-  // console.log("Supprimer un projet : ");
-  // projectServices.deleteProject("Projet 2");
-  // console.log(projectServices.getProjectTodos());
+  // Supprimer un projet
+  PubSub.subscribe("project_deleted", (topic, data) => {
+    view.renderProject(data.projects);
+  });
 
   console.log("Afficher les tâches d'aujoud'hui : ");
-  console.log(displayTodo.filterByToday(toDoServices.getTodos()));
 
   console.log("Afficher par semaine : ");
-  console.log(displayTodo.filterByWeek(toDoServices.getTodos()));
 
   console.log("Afficher par mois : ");
-  console.log(displayTodo.filterByMonth(toDoServices.getTodos()));
 }
 
 main();

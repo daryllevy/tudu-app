@@ -156,6 +156,24 @@ aside {
   font-weight: 700;
 }
 
+.projects-list .flex {
+  align-items: center;
+}
+
+.projects-list .trash {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.projects-list li:hover .trash,
+.projects-list li:focus-within .trash {
+  opacity: 1;
+}
+
 h2,
 h3 {
   font-size: 2rem;

@@ -85,9 +85,26 @@ class TodoHtmlView {
     });
 
     this.projectList.addEventListener("click", (e) => {
-      this.displayTitle(e);
+      const deleteButton = e.target.closest(".trash");
+      if (deleteButton) {
+        const projectTitle = deleteButton.dataset.projectTitle;
+        PubSub.publish("deleting_project", projectTitle);
+
+        if (this.selectedProjectTitle === projectTitle) {
+          this.selectedProjectTitle = null;
+          this.isProjectTask = false;
+          this.taskList.innerHTML = "";
+          this.contentTitle.textContent = "Inbox";
+        }
+        return;
+      }
+
+      const title = e.target.closest(".project-title");
+      if (!title) return;
+
+      this.displayTitle({ target: title });
       this.isProjectTask = true;
-      this.selectedProjectTitle = e.target.textContent;
+      this.selectedProjectTitle = title.textContent;
       PubSub.publish("project_selected", this.selectedProjectTitle);
     });
 
@@ -103,8 +120,26 @@ class TodoHtmlView {
     this.projectList.innerHTML = "";
     projects.forEach((project) => {
       const li = document.createElement("li");
+      const div = document.createElement("div");
+      const deleteProject = document.createElement("button");
+      const projectTitle = document.createElement("p");
+
+      projectTitle.textContent = project.title;
+      projectTitle.classList.add("project-title");
+      deleteProject.type = "button";
+      deleteProject.textContent = "🗑️";
+      deleteProject.setAttribute(
+        "aria-label",
+        `Supprimer le projet ${project.title}`,
+      );
+      deleteProject.dataset.projectTitle = project.title;
+
+      div.classList.add("flex");
+      deleteProject.classList.add("trash");
       li.classList.add("list", "classification-list");
-      li.textContent = project.title;
+
+      div.append(deleteProject, projectTitle);
+      li.appendChild(div);
       this.projectList.appendChild(li);
     });
   }

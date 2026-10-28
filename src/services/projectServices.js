@@ -24,6 +24,10 @@ class ProjectServices {
     PubSub.subscribe("delete_project_task", (topic, data) => {
       this.deleteTask(data.projectTitle, data.taskId);
     });
+
+    PubSub.subscribe("deleting_project", (topic, projectTitle) => {
+      this.deleteProject(projectTitle);
+    });
   }
 
   createProject(title) {
@@ -61,9 +65,10 @@ class ProjectServices {
   }
 
   deleteProject(projectTitle) {
-    return (this.projects = this.projects.filter(
+    this.projects = this.projects.filter(
       (project) => project.title !== projectTitle,
-    ));
+    );
+    PubSub.publish("project_deleted", { projects: this.projects, projectTitle });
   }
 }
 
