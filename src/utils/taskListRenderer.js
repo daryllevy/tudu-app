@@ -23,6 +23,10 @@ function createTaskListRenderer({
       tasks = getInboxTasks();
     } else if (view.currentSection === "Today") {
       tasks = displayTodo.filterByToday(getInboxTasks());
+    } else if (view.currentSection === "This week") {
+      tasks = displayTodo.filterByWeek(getInboxTasks());
+    } else if (view.currentSection === "This month") {
+      tasks = displayTodo.filterByMonth(getInboxTasks());
     } else if (view.currentSection === "project") {
       const project = projectServices.projects.find(
         (item) => item.title === view.selectedProjectTitle,

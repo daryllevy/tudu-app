@@ -135,6 +135,14 @@ class TodoHtmlView {
       if (e.target.textContent === "Today") {
         PubSub.publish("show_today");
       }
+
+      if (e.target.textContent === "This week") {
+        PubSub.publish("show_week");
+      }
+
+      if (e.target.textContent === "This month") {
+        PubSub.publish("show_month");
+      }
     });
   }
 

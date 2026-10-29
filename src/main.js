@@ -60,9 +60,11 @@ function main() {
   // Afficher les tâches d'aujourd'hui
   PubSub.subscribe("show_today", renderCurrentTasks);
 
-  console.log("Afficher par semaine : ");
+  // Afficher les tâches de cette semaine
+  PubSub.subscribe("show_week", renderCurrentTasks);
 
-  console.log("Afficher par mois : ");
+  // Afficher les tâches de ce mois
+  PubSub.subscribe("show_month", renderCurrentTasks);
 }
 
 main();
