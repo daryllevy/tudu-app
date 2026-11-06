@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TuDu app</title>
+    <script type="module" crossorigin src="/tudu-app/assets/index-kDyW9-p-.js"></script>
+    <link rel="stylesheet" crossorigin href="/tudu-app/assets/index-DIfS-bsd.css">
+  </head>
+  <body>
+    <h2 class="app-title">TuDu App</h2>
+
+    <main>
+      <aside>
+        <div class="todo-classification">
+          <ul class="classification-list-content">
+            <li class="list classification-list">Inbox</li>
+            <li class="list classification-list">Today</li>
+            <li class="list classification-list">This week</li>
+            <li class="list classification-list">This month</li>
+          </ul>
+        </div>
+
+        <div class="project-classification">
+          <h3>Projects</h3>
+          <ul class="projects-list"></ul>
+          <button type="button" class="btn add-project">+ New Project</button>
+          <dialog id="project-dialog">
+            <form id="project-form">
+              <div>
+                <h2 class="form-title">New Project</h2>
+                <input
+                  type="text"
+                  id="project-title"
+                  placeholder="Title"
+                  required
+                />
+                <div class="btns">
+                  <button class="btn green" type="submit">Save</button>
+                  <button
+                    class="btn red"
+                    type="submit"
+                    formmethod="dialog"
+                    formnovalidate
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </form>
+          </dialog>
+        </div>
+      </aside>
+      <div class="main-content">
+        <div class="content-list">
+          <h2 class="content-title">Inbox</h2>
+          <ul class="tasks-list"></ul>
+        </div>
+        <button type="button" class="btn add-task">+ New Task</button>
+        <dialog id="task-dialog">
+          <div>
+            <button
+              class="btn red"
+              type="submit "
+              form="task-form"
+              formmethod="dialog"
+              formnovalidate
+            >
+              X
+            </button>
+            <form method="dialog" id="task-form">
+              <div>
+                <h2 class="form-title">New Task</h2>
+                <input
+                  type="text"
+                  id="task-title"
+                  placeholder="Title"
+                  required
+                />
+                <input type="text" id="description" placeholder="Description" />
+                <input type="date" id="dueDate" />
+                <select name="priorities" id="priority-select">
+                  <option value="">--Priority--</option>
+                  <option value="high" id="high">High</option>
+                  <option value="medium" id="medium">Medium</option>
+                  <option value="low" id="low">Low</option>
+                </select>
+                <button class="btn green" type="submit">Save</button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      </div>
+    </main>
+  </body>
+</html>
