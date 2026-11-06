@@ -1,5 +1,9 @@
 # TuDu App
 
+# Démo
+
+Le lien de la démo : https://daryllevy.github.io/tudu-app/
+
 ## Description
 
 TuDu App est une application de gestion de tâches minimaliste, inspirée de Todoist, développée en vanilla JavaScript moderne (ES6 modules). Elle permet de gérer vos tâches par projet, d'utiliser des filtres intelligents (Inbox, Aujourd'hui, Semaine, Mois), et de conserver vos données localement.
