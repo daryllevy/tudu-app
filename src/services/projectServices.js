@@ -3,8 +3,9 @@ import Project from "../models/Project";
 import PubSub from "pubsub-js";
 
 class ProjectServices {
-  constructor() {
-    this.projects = [];
+  constructor(repository) {
+    this.repository = repository;
+    this.projects = this.repository.loadProjects();
 
     PubSub.subscribe("adding_project", (topic, data) => {
       this.createProject(data.title);
@@ -35,6 +36,7 @@ class ProjectServices {
   createProject(title) {
     const projectTitle = new Project(title);
     this.projects.push(projectTitle);
+    this.repository.saveProjects(this.projects);
 
     PubSub.publish("project_added", this.projects);
   }
@@ -49,6 +51,7 @@ class ProjectServices {
     const newTodo = new ToDo(title, description, dueDate, priority);
 
     project.todos.push(newTodo);
+    this.repository.saveProjects(this.projects);
     PubSub.publish("project_task_added", project.todos);
   }
 
@@ -57,6 +60,7 @@ class ProjectServices {
 
     if (project) {
       project.todos = project.todos.filter((task) => task.id !== taskId);
+      this.repository.saveProjects(this.projects);
       PubSub.publish("project_task_deleted", project.todos);
     }
   }
@@ -67,6 +71,7 @@ class ProjectServices {
 
     if (task) {
       Object.assign(task, data);
+      this.repository.saveProjects(this.projects);
       PubSub.publish("project_task_added", project.todos);
     }
   }
@@ -75,6 +80,7 @@ class ProjectServices {
     this.projects = this.projects.filter(
       (project) => project.title !== projectTitle,
     );
+    this.repository.saveProjects(this.projects);
     PubSub.publish("project_deleted", { projects: this.projects, projectTitle });
   }
 }

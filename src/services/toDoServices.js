@@ -2,8 +2,9 @@ import ToDo from "../models/toDo";
 import PubSub from "pubsub-js";
 
 class ToDoServices {
-  constructor() {
-    this.todos = [];
+  constructor(repository) {
+    this.repository = repository;
+    this.todos = this.repository.loadTodos();
 
     PubSub.subscribe("adding_task", (topic, data) => {
       this.createToDo({
@@ -26,6 +27,7 @@ class ToDoServices {
   createToDo({ title, description, dueDate, priority }) {
     const todo = new ToDo(title, description, dueDate, priority);
     this.todos.push(todo);
+    this.repository.saveTodos(this.todos);
 
     PubSub.publish("task_added", this.todos);
     return todo;
@@ -36,12 +38,14 @@ class ToDoServices {
 
     if (todo) {
       Object.assign(todo, data);
+      this.repository.saveTodos(this.todos);
       PubSub.publish("task_added", this.todos);
     }
   }
 
   deleteTodo(todoId) {
     this.todos = this.todos.filter((todo) => todo.id !== todoId);
+    this.repository.saveTodos(this.todos);
     PubSub.publish("task_deleted", this.todos);
   }
 }

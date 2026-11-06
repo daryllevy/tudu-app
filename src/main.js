@@ -3,11 +3,14 @@ import ToDoServices from "./services/toDoServices";
 import ProjectServices from "./services/projectServices";
 import DisplayToDo from "./utils/displayTodo";
 import createTaskListRenderer from "./utils/taskListRenderer";
+import LocalStorageTodosRepository from "./repositories/localStorageTodosRepository";
 import PubSub from "pubsub-js";
 import "./style.css";
 
-const toDoServices = new ToDoServices();
-const projectServices = new ProjectServices();
+// Les deux services partagent le dépôt, mais utilisent chacun leur propre clé.
+const repository = new LocalStorageTodosRepository();
+const toDoServices = new ToDoServices(repository);
+const projectServices = new ProjectServices(repository);
 const displayTodo = new DisplayToDo();
 const view = new TodoHtmlView();
 const renderCurrentTasks = createTaskListRenderer({
@@ -65,6 +68,10 @@ function main() {
 
   // Afficher les tâches de ce mois
   PubSub.subscribe("show_month", renderCurrentTasks);
+
+  // Affiche les projets et tâches récupérés depuis localStorage au démarrage.
+  view.renderProject(projectServices.projects);
+  renderCurrentTasks();
 }
 
 main();
